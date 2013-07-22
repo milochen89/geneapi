@@ -28,8 +28,8 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/chenhao/Downloads/jsch-0.1.50.jar"/>
-	<classpathentry kind="lib" path="/home/chenhao/Downloads/expect4j-1.0.jar"/>
-	<classpathentry kind="lib" path="/home/chenhao/Downloads/oro-2.0.7.jar"/>
+	<classpathentry kind="lib" path="lib/expect4j-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/oro-2.0.7.jar"/>
+	<classpathentry kind="lib" path="lib/jsch-0.1.50.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

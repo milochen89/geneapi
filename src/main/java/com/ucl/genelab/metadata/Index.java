@@ -1,4 +1,4 @@
-package metadata;
+package com.ucl.genelab.metadata;
 
 public class Index {
 	private String RefPath;

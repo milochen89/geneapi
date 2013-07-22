@@ -1,4 +1,4 @@
-package ssh;
+package com.ucl.genelab.ssh;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
