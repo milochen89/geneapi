@@ -1,5 +1,7 @@
 package com.ucl.genelab.resource;
 import com.ucl.genelab.ssh.Shell;
+//import login.properties;
+
 public class connectiontest {
 
 	public static void main(String[] args) throws Exception {

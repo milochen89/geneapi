@@ -1,4 +1,4 @@
-package com.ucl.genelab.resource;
+package com.ucl.genelab.service;
 
 
 import javax.ws.rs.Consumes;
