@@ -31,5 +31,7 @@
 	<classpathentry kind="lib" path="lib/expect4j-1.0.jar"/>
 	<classpathentry kind="lib" path="lib/oro-2.0.7.jar"/>
 	<classpathentry kind="lib" path="lib/jsch-0.1.50.jar"/>
+	<classpathentry kind="lib" path="lib/springframework-5.1.0-M1.jar"/>
+	<classpathentry kind="lib" path="lib/ganymed-ssh2-build210.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

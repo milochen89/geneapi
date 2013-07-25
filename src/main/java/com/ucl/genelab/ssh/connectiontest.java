@@ -1,11 +1,10 @@
-package com.ucl.genelab.resource;
-import com.ucl.genelab.ssh.Shell;
-//import login.properties;
+package com.ucl.genelab.ssh;
+import com.ucl.genelab.resource.*;
 
 public class connectiontest {
 
 	public static void main(String[] args) throws Exception {
-		Shell shell = new Shell("127.0.0.1",22,"username","password");
+		Shell shell = new Shell(Conf.IP,Conf.PORT,Conf.USERNAME,Conf.PASSWORD);
 		String[] abc = {"ls"};
 		String[] abc2 = {"touch me.txt"};
 		boolean iss = shell.executeCommands(abc);
