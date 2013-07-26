@@ -32,7 +32,8 @@
 					data: json
 			
 				}).done(function() { 
-					alert("Succeeded to add to-do"); 
+					//alert("Succeeded to add to-do"); 
+					window.location = "/api/taskadded.jsp" 
 				}).fail(function(jqXHR, textStatus, errorThrown) {
 					console.log(textStatus);
 					console.log(errorThrown);

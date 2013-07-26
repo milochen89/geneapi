@@ -71,6 +71,13 @@
 			<artifactId>spring-context</artifactId>
 			<version>3.2.3.RELEASE</version>
 		</dependency>
+		
+   <dependency>
+      <groupId>ch.ethz.ganymed</groupId>
+      <artifactId>ganymed-ssh2</artifactId>
+      <version>build210</version>
+    </dependency>
+		
 	</dependencies>
 	<repositories>
 		<repository>

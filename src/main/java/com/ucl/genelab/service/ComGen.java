@@ -1,6 +1,7 @@
 package com.ucl.genelab.service;
 
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
@@ -10,13 +11,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.ResponseBuilder;
 
 import com.ucl.genelab.metadata.Bwamem;
 import com.ucl.genelab.metadata.Bwaindex;
 import com.ucl.genelab.metadata.Inputfilelist;
 import com.ucl.genelab.resource.Conf;
 import com.ucl.genelab.resource.Init;
+import com.ucl.genelab.ssh.GetJobId;
 import com.ucl.genelab.ssh.SSHUtil;
 import com.ucl.genelab.ssh.SshConfiguration;
 import com.ucl.genelab.resource.Conf;
@@ -28,11 +29,15 @@ import org.apache.log4j.Logger;
 public class ComGen {
 	private static Logger logger = Logger.getLogger(ComGen.class);
 //	private Shell shell = new Shell(Conf.IP,Conf.PORT,Conf.USERNAME,Conf.PASSWORD);
-	private SshConfiguration conf = new SshConfiguration( Conf.IP,Conf.USERNAME,Conf.PASSWORD,Conf.PORT);
-	public ArrayList<String> reflist = new ArrayList();
-	public ArrayList<String> inputlist = new ArrayList();
-	public Referencelist RL = new Referencelist();
-	public Inputfilelist IFL = new Inputfilelist();
+	private static SshConfiguration conf = new SshConfiguration( Conf.IP,Conf.USERNAME,Conf.PASSWORD,Conf.PORT);
+	public static ArrayList<String> reflist = new ArrayList();
+	public static ArrayList<String> inputlist = new ArrayList();
+	public static Referencelist RL = new Referencelist();
+	public static Inputfilelist IFL = new Inputfilelist();
+	private static String jobid;
+	
+	public ComGen(){
+	}
 	
 	@GET
 	@Path("/getreflist")
@@ -56,18 +61,27 @@ public class ComGen {
 		return IFL;
 	}
 	
+	@GET
+	@Path("/getjobid")
+	@Produces("text/plain")
+	public String getJobid() throws Exception{
+		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^");
+		System.out.println(this.jobid);
+		return this.jobid;
+	}
 	
 	
 	@POST
 	@Path("/index")
 	@Produces("text/plain")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String genIndex(Bwaindex bwaindex) throws Exception{
+	public Response genIndex(Bwaindex bwaindex) throws Exception{
 //		Init init = new Init(conf);
 		String aa = bwaindex.getRefname()+" "+ bwaindex.getRefpath();
 //		reflist = init.reflist;
 //		System.out.println(reflist.toString());
-		return aa;
+		java.net.URI location = new java.net.URI("../index.jsp");
+	    return Response.status(201).entity(aa).build();
 	}
 	
 
@@ -97,24 +111,24 @@ public class ComGen {
 	*/
 	@POST
 	@Path("mem")
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces("text/plain")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response genMem (Bwamem mem){
-		String jobid = "";
-		String command = "hadoop jar GENE.jar "+mem.getRefname()+" "+mem.getInputpath()+" "+mem.getInputpath();
-/*		try {
-			   SSHUtil sshUitl = new SSHUtil(conf);
-			   sshUitl.runCmdHadoop(command, "UTF-8");
-			   jobid = sshUitl.jobid;
-			   sshUitl.close();
-			  } catch (Exception e) {
-			   e.printStackTrace();
-			  }
-		String displayMessage = "Your job is running, jobid = "+ jobid;*/
-		ResponseBuilder builder = Response.ok(command);
-		builder.language("en").header("Some-Header", command);  
-	    return builder.build();
-	    
+	public Response genMem (Bwamem mem) throws URISyntaxException{
+
+		String command = "cd /home/chenhao/hadoop && ./bin/hadoop jar hadoop-examples-1.1.2.jar wordcount hdfs://localhost:9000/tmp/wordcount/word.txt hdfs://localhost:9000/tmp/wordcount/out";
+//		String command = "hadoop jar GENE.jar "+mem.getRefname()+" "+mem.getInputpath()+" "+mem.getInputpath();
+		this.jobid = GetJobId.getjobid(mem);
+		String displayMessage = "Your job is running, jobid = "+ jobid;
+		System.out.println("*******************************");
+		String ccc = "hadoop jar GENE.jar "+mem.getRefname()+" "+mem.getInputpath()+" "+mem.getInputpath();
+		System.out.println(displayMessage);
+		System.out.println("!!!!!!!!!!!!!!!!!!!!");
+		System.out.println(this.jobid);
+//	    return Response.temporaryRedirect(location).build();
+	    return Response.status(201).entity(displayMessage).build();
 	}
+	
+	
+	
 	
 }

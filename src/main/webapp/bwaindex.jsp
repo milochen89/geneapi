@@ -32,7 +32,7 @@
 					data:json
 			
 				}).done(function() { 
-					alert("Succeeded to add to-do"); 
+					window.location = "index.jsp" 
 				}).fail(function(jqXHR, textStatus, errorThrown) {
 					console.log(textStatus);
 					console.log(errorThrown);

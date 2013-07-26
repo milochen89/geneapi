@@ -103,14 +103,33 @@ public class SSHUtil {
         channelExec.setErrStream(System.err); 
         channelExec.connect(); 
         InputStream in = channelExec.getInputStream(); 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in, Charset.forName(charset))); 
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in, Charset.forName(charset)));
+        
+        byte[] tmp=new byte[1024];
+        while(true){
+          while(in.available()>0){
+            int i=in.read(tmp, 0, 1024);
+            if(i<0)break;
+            System.out.print(new String(tmp, 0, i));
+          }
+          if(channelExec.isClosed()){
+              System.out.println("exit-status: "+channelExec.getExitStatus());
+              break;
+            }
+            try{Thread.sleep(1000);}catch(Exception ee) {ee.printStackTrace();}
+          }
+        
+        /*
         String buf = null; 
-        while ((buf = reader.readLine()) != null || buf.indexOf("Running job") != -1) 
+        while ((buf = reader.readLine()) != null) 
         { 
-        	this.jobid = buf.substring(buf.indexOf("Running job")+12);
+        	LOG.info("buf="+buf);
+        	jobid = buf.substring(buf.indexOf("Running job")+12,buf.indexOf("Running job")+33);
             System.out.println(buf); 
             buff = buff +buf;
         } 
+        */
+        LOG.info("jobid="+jobid);
         reader.close(); 
         channelExec.disconnect(); 
     }
