@@ -11,12 +11,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-import com.ucl.genelab.metadata.Bwamem;
+import com.ucl.genelab.metadata.Completion;
 import com.ucl.genelab.resource.Conf;
-public class GetJobId {
-    public static String getjobid (Bwamem mem) {
+public class GetJobProcess {
+    public static void getjobprogcess (String jobid, Completion completion) {
     	
-    String jobid = "";
      try
   {
    /* Create a connection instance */
@@ -47,7 +46,7 @@ public class GetJobId {
    BufferedReader stderrReader = new BufferedReader(new InputStreamReader(stderr));
 
    PrintWriter out =new PrintWriter(sess.getStdin());
-   String command = "hadoop jar /mapr/mapr-m3-student/myvolume/genelab/GENE.jar mem "+mem.getRefname()+" "+mem.getInputpath()+" "+mem.getOutputpath();
+   String command = "cd /home/chenhao/hadoop && ./bin/hadoop job -status "+jobid;
 //   out.println("cd /home/chenhao/hadoop && ./bin/hadoop jar hadoop-examples-1.1.2.jar wordcount hdfs://localhost:9000/tmp/wordcount/word.txt hdfs://localhost:9000/tmp/wordcount/out");
    
    out.println(command);
@@ -60,13 +59,34 @@ public class GetJobId {
    while (true)
    {
     String line = stdoutReader.readLine();
-    if (line == null || line.indexOf("Running job") != -1)
+    if (line == null)
     {
-     jobid = line.substring(line.indexOf("Running job")+13,line.indexOf("Running job")+34);
-     System.out.println(jobid);
      break;
     }
+    
+    if ( line.indexOf("map() completion:") != -1)
+    {
+    	System.out.println(line);
+    	completion.setMapcompletion( Double.parseDouble(line.substring(line.indexOf("map() completion:")+18)));
+    	System.out.println(completion.getMapcompletion());
+    }
+    if ( line.indexOf("reduce() completion:") != -1)
+    {
+    	System.out.println(line);
+    	completion.setReducecompletion( Double.parseDouble(line.substring(line.indexOf("reduce() completion:")+21)));
+    	System.out.println(completion.getReducecompletion());
+    	 break;
+    }
+    if ( line.indexOf("Could not find job") != -1)
+    {
+    	System.out.println(line);
+    	completion.setMapcompletion(-1);
+    	System.out.println(completion.getMapcompletion());
+    	 break;
+    }
+    
     System.out.println(line);
+    
    }
    /*
    System.out.println("Here is the output from stderr:");
@@ -90,7 +110,6 @@ public class GetJobId {
    e.printStackTrace(System.err);
    System.exit(2);
   }
-     return jobid;
+     return;
   }
-    
-    }
+ }

@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -14,10 +15,12 @@ import javax.ws.rs.core.Response;
 
 import com.ucl.genelab.metadata.Bwamem;
 import com.ucl.genelab.metadata.Bwaindex;
+import com.ucl.genelab.metadata.Completion;
 import com.ucl.genelab.metadata.Inputfilelist;
 import com.ucl.genelab.resource.Conf;
 import com.ucl.genelab.resource.Init;
 import com.ucl.genelab.ssh.GetJobId;
+import com.ucl.genelab.ssh.GetJobProcess;
 import com.ucl.genelab.ssh.SSHUtil;
 import com.ucl.genelab.ssh.SshConfiguration;
 import com.ucl.genelab.resource.Conf;
@@ -34,7 +37,8 @@ public class ComGen {
 	public static ArrayList<String> inputlist = new ArrayList();
 	public static Referencelist RL = new Referencelist();
 	public static Inputfilelist IFL = new Inputfilelist();
-	private static String jobid;
+	public static String jobid;
+	public static Completion completion = new Completion();
 	
 	public ComGen(){
 	}
@@ -70,6 +74,12 @@ public class ComGen {
 		return this.jobid;
 	}
 	
+	@GET
+	@Path("/getprocess")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Completion getprocess() throws Exception{
+		return completion;
+	}
 	
 	@POST
 	@Path("/index")
@@ -86,36 +96,13 @@ public class ComGen {
 	
 
 	
-/*	
-	@POST
-	@Path("mem")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response genMem (Bwamem mem){
-		String jobid = "";
-		String command = "hadoop jar GENE.jar "+mem.getRefname()+" "+mem.getInputpath()+" "+mem.getInputpath();
-		try {
-			   SSHUtil sshUitl = new SSHUtil(conf);
-			   sshUitl.runCmdHadoop(command, "UTF-8");
-			   jobid = sshUitl.jobid;
-			   sshUitl.close();
-			  } catch (Exception e) {
-			   e.printStackTrace();
-			  }
-		String displayMessage = "Your job is running, jobid = "+ jobid;
-		ResponseBuilder builder = Response.ok(displayMessage);
-		builder.language("en").header("Some-Header", "some value");  
-	    return builder.build();
-	}
-	
-	*/
 	@POST
 	@Path("mem")
 	@Produces("text/plain")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response genMem (Bwamem mem) throws URISyntaxException{
 
-		String command = "cd /home/chenhao/hadoop && ./bin/hadoop jar hadoop-examples-1.1.2.jar wordcount hdfs://localhost:9000/tmp/wordcount/word.txt hdfs://localhost:9000/tmp/wordcount/out";
+//		String command = "cd /home/chenhao/hadoop && ./bin/hadoop jar hadoop-examples-1.1.2.jar wordcount hdfs://localhost:9000/tmp/wordcount/word.txt hdfs://localhost:9000/tmp/wordcount/out";
 //		String command = "hadoop jar GENE.jar "+mem.getRefname()+" "+mem.getInputpath()+" "+mem.getInputpath();
 		this.jobid = GetJobId.getjobid(mem);
 		String displayMessage = "Your job is running, jobid = "+ jobid;
@@ -128,7 +115,22 @@ public class ComGen {
 	    return Response.status(201).entity(displayMessage).build();
 	}
 	
-	
+	@POST
+	@Path("checkprocess")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response checkProcess (@FormParam("jobid") String clientjobid) throws URISyntaxException{
+
+//		String command = "cd /home/chenhao/hadoop && ./bin/hadoop jar hadoop-examples-1.1.2.jar wordcount hdfs://localhost:9000/tmp/wordcount/word.txt hdfs://localhost:9000/tmp/wordcount/out";
+//		String command = "hadoop jar GENE.jar "+mem.getRefname()+" "+mem.getInputpath()+" "+mem.getInputpath();
+		GetJobProcess.getjobprogcess(clientjobid, completion);
+		String displayMessage = "mapcompletion "+ completion.getMapcompletion() + " reducecompletion "+ completion.getReducecompletion();
+		System.out.println("*******************************");
+		System.out.println(clientjobid);
+		System.out.println("!!!!!!!!!!!!!!!!!!!!");
+		System.out.println(this.jobid);
+//	    return Response.temporaryRedirect(location).build();
+	    return Response.status(201).entity(completion).build();
+	}
 	
 	
 }
