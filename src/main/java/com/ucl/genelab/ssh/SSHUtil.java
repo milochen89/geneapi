@@ -31,14 +31,14 @@ public class SSHUtil {
     public SSHUtil(SshConfiguration conf) throws Exception 
     { 
         LOG.info("trying to connect to host:" + conf.getHost() + ",username:" + conf.getUsername() + ",password:" + conf.getPassword() + ",port:" + conf.getPort()); 
-        JSch jsch = new JSch(); // 创建JSch对象  
-        session = jsch.getSession(conf.getUsername(), conf.getHost(), conf.getPort()); // 根据用户名，主机ip，端口获取一个Session对象  
-        session.setPassword(conf.getPassword()); // 设置密码  
+        JSch jsch = new JSch();  
+        session = jsch.getSession(conf.getUsername(), conf.getHost(), conf.getPort()); 
+        session.setPassword(conf.getPassword()); 
         Properties config = new Properties(); 
         config.put("StrictHostKeyChecking", "no"); 
-        session.setConfig(config); // 为Session对象设置properties  
-        session.setTimeout(timeout); // 设置timeout时间  
-        session.connect(); // 通过Session建立链接  
+        session.setConfig(config); 
+        session.setTimeout(timeout);  
+        session.connect(); 
     } 
      
     public void download(String src, String dst) throws Exception 

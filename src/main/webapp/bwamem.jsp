@@ -17,7 +17,7 @@
 			return json;
 		}
 		
-		jQuery(document).on('ready', function() {
+		$(document).ready(function(){
 			jQuery('form#add-new-task').bind('submit', function(event){
 				event.preventDefault();
 				
@@ -106,9 +106,7 @@
 					<label for="inputpath">InputPath:</label>
 					 <select id="inputpath" name="inputpath"></select>
 					<label for="refname">RefName:</label>
-					 <select id="refname" name="refname"></select>
-					<label for="outputpath">OutputPath:</label>
-					<input id="outputpath" name="outputpath" type="text" required>					
+					 <select id="refname" name="refname"></select>					
 					<br/>
 					<input type="submit" value="Add new task">
 				</form>

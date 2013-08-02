@@ -8,6 +8,7 @@ import com.ucl.genelab.ssh.SshConfiguration;
 public class Init {
 	public ArrayList<String> reflist = new ArrayList();
 	public ArrayList<String> inputlist = new ArrayList();
+	public ArrayList<String> outputlist = new ArrayList();
 	public Init(SshConfiguration conf) throws Exception {
 		
 		/*
@@ -16,11 +17,13 @@ public class Init {
 		*/
 		String reffilecommand = "cd /home/chenhao/git/ && ls";
 		String inputfilecommand = "cd /home/chenhao/git/ && ls";
+		String outputfilecommand = "cd /home/chenhao/git/ && ls";
 		SSHUtil sshUitl = new SSHUtil(conf);
 		sshUitl.runCmdout(reffilecommand, "UTF-8", reflist);
 //		sshUitl.runCmdout("ls", "UTF-8", reflist);
 		sshUitl.runCmdout(inputfilecommand, "UTF-8", inputlist);
 //		sshUitl.runCmdout("ls", "UTF-8", inputlist);
+		sshUitl.runCmdout(outputfilecommand, "UTF-8", outputlist);
 		sshUitl.close();
 	}
 	

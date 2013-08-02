@@ -17,6 +17,7 @@ import com.ucl.genelab.metadata.Bwamem;
 import com.ucl.genelab.metadata.Bwaindex;
 import com.ucl.genelab.metadata.Completion;
 import com.ucl.genelab.metadata.Inputfilelist;
+import com.ucl.genelab.metadata.Outputfilelist;
 import com.ucl.genelab.resource.Conf;
 import com.ucl.genelab.resource.Init;
 import com.ucl.genelab.ssh.GetJobId;
@@ -35,8 +36,10 @@ public class ComGen {
 	private static SshConfiguration conf = new SshConfiguration( Conf.IP,Conf.USERNAME,Conf.PASSWORD,Conf.PORT);
 	public static ArrayList<String> reflist = new ArrayList();
 	public static ArrayList<String> inputlist = new ArrayList();
+	public static ArrayList<String> outputlist = new ArrayList();
 	public static Referencelist RL = new Referencelist();
 	public static Inputfilelist IFL = new Inputfilelist();
+	public static Outputfilelist OFL = new Outputfilelist();
 	public static String jobid;
 	public static Completion completion = new Completion();
 	
@@ -50,6 +53,7 @@ public class ComGen {
 	public Referencelist getreflist() throws Exception{
 		Init init = new Init(conf);
 		RL.setReflist(init.reflist);
+		reflist = RL.getReflist();
 		System.out.println(reflist.toString());
 		return RL;
 	}
@@ -61,8 +65,21 @@ public class ComGen {
 	public Inputfilelist getinputlist() throws Exception{
 		Init init = new Init(conf);
 		IFL.setInputlist(init.inputlist);
+		inputlist = IFL.getInputlist();
 		System.out.println(inputlist.toString());
 		return IFL;
+	}
+	
+	@GET
+	@Path("/getoutputlist")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Outputfilelist getoutputlist() throws Exception{
+		Init init = new Init(conf);
+		OFL.setOutputlist(init.outputlist);
+		outputlist = OFL.getOutputlist();
+		System.out.println(outputlist.toString());
+		return OFL;
 	}
 	
 	@GET

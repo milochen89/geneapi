@@ -17,7 +17,7 @@
 			return json;
 		}
 		
-		jQuery(document).on('ready', function() {
+		$(document).ready(function() {
 			jQuery('form#add-new-task').bind('submit', function(event){
 				event.preventDefault();
 				

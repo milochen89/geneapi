@@ -47,7 +47,7 @@ public class GetJobId {
    BufferedReader stderrReader = new BufferedReader(new InputStreamReader(stderr));
 
    PrintWriter out =new PrintWriter(sess.getStdin());
-   String command = "hadoop jar /mapr/mapr-m3-student/myvolume/genelab/GENE.jar mem "+mem.getRefname()+" "+mem.getInputpath()+" "+mem.getOutputpath();
+   String command = "hadoop jar /mapr/mapr-m3-student/myvolume/genelab/GENE.jar mem "+mem.getRefname()+" "+mem.getInputpath();
 //   out.println("cd /home/chenhao/hadoop && ./bin/hadoop jar hadoop-examples-1.1.2.jar wordcount hdfs://localhost:9000/tmp/wordcount/word.txt hdfs://localhost:9000/tmp/wordcount/out");
    
    out.println(command);
