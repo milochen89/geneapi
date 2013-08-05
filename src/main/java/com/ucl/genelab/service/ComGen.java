@@ -42,7 +42,7 @@ public class ComGen {
 	public static Outputfilelist OFL = new Outputfilelist();
 	public static String jobid;
 	public static Completion completion = new Completion();
-	
+
 	public ComGen(){
 	}
 	
@@ -80,6 +80,23 @@ public class ComGen {
 		outputlist = OFL.getOutputlist();
 		System.out.println(outputlist.toString());
 		return OFL;
+	}
+	
+	@POST
+	@Path("/checkoutputlist")
+	@Produces("text/plain")
+	@Consumes("text/plain")
+	public Response checkoutputlist(String filetocheck) throws Exception{
+		System.out.println(filetocheck);
+		Init init = new Init(conf);
+		OFL.setOutputlist(init.outputlist);
+		outputlist = OFL.getOutputlist();
+		if (outputlist.contains(filetocheck))
+		{
+			return Response.status(201).entity("1").build();
+		}else{
+			return Response.status(201).entity("0").build();
+		}
 	}
 	
 	@GET
