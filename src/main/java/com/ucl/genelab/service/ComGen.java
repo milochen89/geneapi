@@ -32,7 +32,6 @@ import org.apache.log4j.Logger;
 @Path("/command")
 public class ComGen {
 	private static Logger logger = Logger.getLogger(ComGen.class);
-//	private Shell shell = new Shell(Conf.IP,Conf.PORT,Conf.USERNAME,Conf.PASSWORD);
 	private static SshConfiguration conf = new SshConfiguration( Conf.IP,Conf.USERNAME,Conf.PASSWORD,Conf.PORT);
 	public static ArrayList<String> reflist = new ArrayList();
 	public static ArrayList<String> inputlist = new ArrayList();

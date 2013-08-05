@@ -84,6 +84,20 @@ public class GetJobProcess {
     	System.out.println(completion.getMapcompletion());
     	 break;
     }
+    if ( line.indexOf("is not properly formed") != -1)
+    {
+    	System.out.println(line);
+    	completion.setMapcompletion(-1);
+    	System.out.println(completion.getMapcompletion());
+    	 break;
+    }
+    if ( line.indexOf("java.lang.NullPointerException") != -1)
+    {
+    	System.out.println(line);
+    	completion.setMapcompletion(-1);
+    	System.out.println(completion.getMapcompletion());
+    	 break;
+    }
     
     System.out.println(line);
     
