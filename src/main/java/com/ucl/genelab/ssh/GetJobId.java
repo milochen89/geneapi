@@ -67,6 +67,18 @@ public class GetJobId {
      System.out.println(jobid);
      break;
     }
+    if (line.indexOf("FileAlreadyExistsException") != -1)
+    {
+     jobid = "error";
+     System.out.println(jobid);
+     break;
+    }
+    if (line.indexOf("Connection refused") != -1)
+    {
+     jobid = "hadoop server is not running";
+     System.out.println(jobid);
+     break;
+    }
     System.out.println(line);
    }
    /*

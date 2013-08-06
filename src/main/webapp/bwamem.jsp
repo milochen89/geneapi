@@ -37,7 +37,7 @@
 					success :function(data) {
 						isfileexist = data;
 						console.log(data);
-						if (isfileexist)
+						if (isfileexist == 1)
 						{
 							console.log(isfileexist);
 							$("#msg").css("visibility","visible");

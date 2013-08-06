@@ -145,7 +145,12 @@ public class ComGen {
 		System.out.println("!!!!!!!!!!!!!!!!!!!!");
 		System.out.println(this.jobid);
 //	    return Response.temporaryRedirect(location).build();
-	    return Response.status(201).entity(displayMessage).build();
+		if (this.jobid.contains("job"))
+		{
+	    return Response.status(201).entity(this.jobid).build();
+		}else{
+		return Response.status(403).entity(this.jobid).build();
+		}
 	}
 	
 	@POST
