@@ -110,8 +110,60 @@ public class ComGen {
 	@GET
 	@Path("/getprocess")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Completion getprocess() throws Exception{
-		return completion;
+	public Response getprocess() throws Exception{
+		return Response.status(201).entity(completion).build();
+	}
+	
+	@GET
+	@Path("/deleteall")
+	@Produces("text/plain")
+	public Response deleteall() {
+		try{
+		SSHUtil SshUitl = new SSHUtil(conf);
+		SshUitl.runCmd("hadoop jar /mapr/mapr-m3-student/myvolume/genelab/GENE.jar clean all", "UTF-8");
+		return Response.status(201).entity("1").build();
+		}catch (Exception ex){
+			return Response.status(403).entity("0").build();
+		}
+	}
+	
+	@GET
+	@Path("/deletecache")
+	@Produces("text/plain")
+	public Response deletecache() {
+		try{
+		SSHUtil SshUitl = new SSHUtil(conf);
+		SshUitl.runCmd("hadoop jar /mapr/mapr-m3-student/myvolume/genelab/GENE.jar clean cache", "UTF-8");
+		return Response.status(201).entity("1").build();
+		}catch (Exception ex){
+			return Response.status(403).entity("0").build();
+		}
+	}
+	
+	@GET
+	@Path("/deletereference")
+	@Produces("text/plain")
+	public Response deletereference() {
+		try{
+		SSHUtil SshUitl = new SSHUtil(conf);
+		SshUitl.runCmd("hadoop jar /mapr/mapr-m3-student/myvolume/genelab/GENE.jar clean reference", "UTF-8");
+		return Response.status(201).entity("1").build();
+		}catch (Exception ex){
+			return Response.status(403).entity("0").build();
+		}
+	}
+	
+	@GET
+	@Path("/deletebwa")
+	@Produces("text/plain")
+	public Response deletebwa() {
+		try{
+		SSHUtil SshUitl = new SSHUtil(conf);
+		SshUitl.runCmd("hadoop jar /mapr/mapr-m3-student/myvolume/genelab/GENE.jar clean bwa", "UTF-8");
+		return Response.status(201).entity("1").build();
+		}catch (Exception ex){
+			return Response.status(403).entity("0").build();
+		}
 	}
 	
 	@POST
@@ -137,19 +189,17 @@ public class ComGen {
 
 //		String command = "cd /home/chenhao/hadoop && ./bin/hadoop jar hadoop-examples-1.1.2.jar wordcount hdfs://localhost:9000/tmp/wordcount/word.txt hdfs://localhost:9000/tmp/wordcount/out";
 //		String command = "hadoop jar GENE.jar "+mem.getRefname()+" "+mem.getInputpath()+" "+mem.getInputpath();
+		if (reflist.contains(mem.getRefname()) && inputlist.contains(mem.getInputpath())){
 		this.jobid = GetJobId.getjobid(mem);
-		String displayMessage = "Your job is running, jobid = "+ jobid;
-		System.out.println("*******************************");
-		String ccc = "hadoop jar GENE.jar "+mem.getRefname()+" "+mem.getInputpath()+" "+mem.getInputpath();
-		System.out.println(displayMessage);
-		System.out.println("!!!!!!!!!!!!!!!!!!!!");
 		System.out.println(this.jobid);
-//	    return Response.temporaryRedirect(location).build();
 		if (this.jobid.contains("job"))
 		{
 	    return Response.status(201).entity(this.jobid).build();
 		}else{
 		return Response.status(403).entity(this.jobid).build();
+		}
+		}else{
+			return Response.status(403).entity("wrong ref or input").build();
 		}
 	}
 	
@@ -162,11 +212,6 @@ public class ComGen {
 //		String command = "hadoop jar GENE.jar "+mem.getRefname()+" "+mem.getInputpath()+" "+mem.getInputpath();
 		GetJobProcess.getjobprogcess(clientjobid, completion);
 		String displayMessage = "mapcompletion "+ completion.getMapcompletion() + " reducecompletion "+ completion.getReducecompletion();
-		System.out.println("*******************************");
-		System.out.println(clientjobid);
-		System.out.println("!!!!!!!!!!!!!!!!!!!!");
-		System.out.println(this.jobid);
-//	    return Response.temporaryRedirect(location).build();
 	    return Response.status(201).entity(completion).build();
 	}
 	

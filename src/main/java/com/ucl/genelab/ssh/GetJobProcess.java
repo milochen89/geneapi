@@ -46,7 +46,9 @@ public class GetJobProcess {
    BufferedReader stderrReader = new BufferedReader(new InputStreamReader(stderr));
 
    PrintWriter out =new PrintWriter(sess.getStdin());
-   String command = "cd /home/chenhao/hadoop && ./bin/hadoop job -status "+jobid;
+   String command = "hadoop job -status "+jobid;
+
+ // String command = "cd /home/chenhao/hadoop && ./bin/hadoop job -status "+jobid;
 //   out.println("cd /home/chenhao/hadoop && ./bin/hadoop jar hadoop-examples-1.1.2.jar wordcount hdfs://localhost:9000/tmp/wordcount/word.txt hdfs://localhost:9000/tmp/wordcount/out");
    
    out.println(command);
@@ -98,7 +100,13 @@ public class GetJobProcess {
     	System.out.println(completion.getMapcompletion());
     	 break;
     }
-    
+    if ( line.indexOf("java.net.ConnectException") != -1)
+    {
+    	System.out.println(line);
+    	completion.setMapcompletion(-1);
+    	System.out.println(completion.getMapcompletion());
+    	 break;
+    }
     System.out.println(line);
     
    }

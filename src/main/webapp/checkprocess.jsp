@@ -18,7 +18,7 @@
 					url: "rest/command/checkprocess",
 					contentType: 'text/plain',
 					data:  $("#add-new-task").serialize()
-			
+					dataType :"json",
 				}).done(function() { 
 					//\alert("Succeeded to add to-do"); 
 					window.location = "/api/process.jsp" 

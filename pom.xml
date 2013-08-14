@@ -34,6 +34,12 @@
 			<artifactId>jersey-client</artifactId>
 			<version>1.8</version>
 		</dependency>
+		  <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.2.4</version>
+      <scope>compile</scope>
+    </dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -71,6 +77,11 @@
 			<artifactId>spring-context</artifactId>
 			<version>3.2.3.RELEASE</version>
 		</dependency>
+		<dependency>
+	<groupId>org.seleniumhq.selenium</groupId>
+	<artifactId>selenium-server</artifactId>
+	<version>2.28.0</version>
+</dependency>
 		
    <dependency>
       <groupId>ch.ethz.ganymed</groupId>

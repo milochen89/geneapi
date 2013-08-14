@@ -10,14 +10,12 @@ import java.util.Properties;
 import org.apache.log4j.Logger; 
 
 import com.jcraft.jsch.ChannelExec; 
-import com.jcraft.jsch.ChannelSftp; 
 import com.jcraft.jsch.JSch; 
 import com.jcraft.jsch.Session; 
  
 
 public class SSHUtil { 
      
-    private ChannelSftp channelSftp; 
      
     private ChannelExec channelExec; 
      
@@ -41,21 +39,6 @@ public class SSHUtil {
         session.connect(); 
     } 
      
-    public void download(String src, String dst) throws Exception 
-    { 
-        channelSftp = (ChannelSftp)session.openChannel("sftp"); 
-        channelSftp.connect(); 
-        channelSftp.get(src, dst, new FileProgressMonitor(), ChannelSftp.OVERWRITE); 
-        channelSftp.quit(); 
-    } 
-     
-    public void upload(String src, String dst) throws Exception 
-    { 
-        channelSftp = (ChannelSftp)session.openChannel("sftp"); 
-        channelSftp.connect(); 
-        channelSftp.put(src, dst, new FileProgressMonitor(), ChannelSftp.OVERWRITE); 
-        channelSftp.quit(); 
-    } 
      
     public void runCmd(String cmd, String charset) throws Exception 
     { 
@@ -94,45 +77,6 @@ public class SSHUtil {
         reader.close(); 
         channelExec.disconnect();
     } 
-    
-    public void runCmdHadoop(String cmd, String charset) throws Exception 
-    { 
-        channelExec = (ChannelExec)session.openChannel("exec"); 
-        channelExec.setCommand(cmd); 
-        channelExec.setInputStream(null); 
-        channelExec.setErrStream(System.err); 
-        channelExec.connect(); 
-        InputStream in = channelExec.getInputStream(); 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in, Charset.forName(charset)));
-        
-        byte[] tmp=new byte[1024];
-        while(true){
-          while(in.available()>0){
-            int i=in.read(tmp, 0, 1024);
-            if(i<0)break;
-            System.out.print(new String(tmp, 0, i));
-          }
-          if(channelExec.isClosed()){
-              System.out.println("exit-status: "+channelExec.getExitStatus());
-              break;
-            }
-            try{Thread.sleep(1000);}catch(Exception ee) {ee.printStackTrace();}
-          }
-        
-        /*
-        String buf = null; 
-        while ((buf = reader.readLine()) != null) 
-        { 
-        	LOG.info("buf="+buf);
-        	jobid = buf.substring(buf.indexOf("Running job")+12,buf.indexOf("Running job")+33);
-            System.out.println(buf); 
-            buff = buff +buf;
-        } 
-        */
-        LOG.info("jobid="+jobid);
-        reader.close(); 
-        channelExec.disconnect(); 
-    }
     
     public String getRespond(){
     	return buff;

@@ -48,10 +48,11 @@ public class GetJobId {
 
    PrintWriter out =new PrintWriter(sess.getStdin());
    String filename = mem.getRefname()+"_"+mem.getInputpath()+"_"+mem.getAlgorithm();
- //  String command = "cd /mapr/mapr-m3-student/myvolume/genelab/output/ && rm -r "+filename+" && hadoop jar /mapr/mapr-m3-student/myvolume/genelab/GENE.jar "+mem.getAlgorithm()+" "+mem.getRefname()+" "+mem.getInputpath();
-  out.println("cd /home/chenhao/hadoop && ./bin/hadoop jar hadoop-examples-1.1.2.jar wordcount hdfs://localhost:9000/tmp/wordcount/word.txt hdfs://localhost:9000/tmp/wordcount/out");
-   
-//   out.println(command);
+   String command = "cd /mapr/mapr-m3-student/myvolume/genelab/output/ && rm -r "+filename;
+  //out.println("cd /home/chenhao/hadoop && ./bin/hadoop jar hadoop-examples-1.1.2.jar wordcount hdfs://localhost:9000/tmp/wordcount/word.txt hdfs://localhost:9000/tmp/wordcount/out");
+   String command2 = "hadoop jar /mapr/mapr-m3-student/myvolume/genelab/GENE.jar "+mem.getAlgorithm()+" "+mem.getRefname()+" "+mem.getInputpath();
+   out.println(command);
+   out.println(command2);
 
    out.close();
    sess.waitForCondition(ChannelCondition.CLOSED | ChannelCondition.EOF | ChannelCondition.EXIT_STATUS, 2000);
@@ -76,6 +77,12 @@ public class GetJobId {
     if (line.indexOf("Connection refused") != -1)
     {
      jobid = "hadoop server is not running";
+     System.out.println(jobid);
+     break;
+    }
+    if (line.indexOf("command not found") != -1)
+    {
+     jobid = "hadoop: command not found";
      System.out.println(jobid);
      break;
     }
