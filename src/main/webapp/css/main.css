@@ -42,6 +42,7 @@ nav ul li {
 nav ul li a{
 	background: #3b3b3b;
 	background: -webkit-linear-gradient(#9e9e9e, #9b9b9b);
+	background: linear-gradient(#9e9e9e, #9b9b9b);
 display: block;
 padding: 0.5em 5%;
 border-bottom: 1px solid #a3a3a3;
@@ -186,8 +187,8 @@ border-bottom-left-radius: 5px;
 }
 
 .button_holder{
-	height:100px;
-	width:600px;
+	height:500px;
+	width:400px;
 	margin:0 auto;
 }
 
@@ -198,5 +199,22 @@ border-bottom-left-radius: 5px;
 
 #cleandone{
 	display:none;
+	text-align:center;
+}
+
+#about_holder{
+	width:400px;height:550px;margin:0 auto;
+}
+
+#about_holder img{
+	border:1px solid #E0E0E0;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#about_holder p{
+	width:400px;
+	height:300px;
 	text-align:center;
 }

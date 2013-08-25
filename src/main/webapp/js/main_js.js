@@ -182,6 +182,11 @@ $(document).ready(function(){
 					});
 				}
 				
+				else if (link_text == "About"){
+					$("#container").load("ajax/about.html",function(){
+					});
+				}
+				
 				else if(link_text == "Maintenance"){
 					$("#container").load("ajax/cleanup.html",function(){
 						$(".cleanup").on("click",function(){
@@ -255,8 +260,7 @@ $(document).ready(function(){
 				}
 				$(".selected").removeClass("selected");
 				link.addClass("selected");
-
-				console.log("success");
+				
 			}).fadeOut("fast");
 
 		}
