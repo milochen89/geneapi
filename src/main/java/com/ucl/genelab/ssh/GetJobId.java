@@ -48,7 +48,7 @@ public class GetJobId {
 
    PrintWriter out =new PrintWriter(sess.getStdin());
    String filename = mem.getRefname()+"_"+mem.getInputpath()+"_"+mem.getAlgorithm();
-   String command = "cd "+ReadConfig.outputfilecommand+" && rm -r "+filename;
+   String command = ReadConfig.outputfilecommand+" && rm -r "+filename;
   //out.println("cd /home/chenhao/hadoop && ./bin/hadoop jar hadoop-examples-1.1.2.jar wordcount hdfs://localhost:9000/tmp/wordcount/word.txt hdfs://localhost:9000/tmp/wordcount/out");
    String command2 = "hadoop jar "+ReadConfig.GENEJARPATH+" "+mem.getAlgorithm()+" "+mem.getRefname()+" "+mem.getInputpath();
 
