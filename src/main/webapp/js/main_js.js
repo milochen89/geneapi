@@ -176,7 +176,7 @@ $(document).ready(function(){
 				}
 				else if(link_text == "Create"){
 					
-					$("#container").load("index.jsp .content",function(){
+					$("#container").load("index.html .content",function(){
 						reload();
 						new_task();
 					});
