@@ -101,7 +101,6 @@ public class ComGen {
 	@Path("/getjobid")
 	@Produces("text/plain")
 	public String getJobid() throws Exception{
-		System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^");
 		System.out.println(this.jobid);
 		return this.jobid;
 	}
@@ -170,10 +169,8 @@ public class ComGen {
 	@Produces("text/plain")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response genIndex(Bwaindex bwaindex) throws Exception{
-//		Init init = new Init(conf);
+
 		String aa = bwaindex.getRefname()+" "+ bwaindex.getRefpath();
-//		reflist = init.reflist;
-//		System.out.println(reflist.toString());
 		java.net.URI location = new java.net.URI("../index.jsp");
 	    return Response.status(201).entity(aa).build();
 	}
@@ -186,8 +183,6 @@ public class ComGen {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response genMem (Bwamem mem) throws URISyntaxException{
 
-//		String command = "cd /home/chenhao/hadoop && ./bin/hadoop jar hadoop-examples-1.1.2.jar wordcount hdfs://localhost:9000/tmp/wordcount/word.txt hdfs://localhost:9000/tmp/wordcount/out";
-//		String command = "hadoop jar GENE.jar "+mem.getRefname()+" "+mem.getInputpath()+" "+mem.getInputpath();
 		if (reflist.contains(mem.getRefname()) && inputlist.contains(mem.getInputpath())){
 		this.jobid = GetJobId.getjobid(mem);
 		System.out.println(this.jobid);
@@ -206,9 +201,6 @@ public class ComGen {
 	@Path("checkprocess")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response checkProcess (@FormParam("jobid") String clientjobid) throws URISyntaxException{
-
-//		String command = "cd /home/chenhao/hadoop && ./bin/hadoop jar hadoop-examples-1.1.2.jar wordcount hdfs://localhost:9000/tmp/wordcount/word.txt hdfs://localhost:9000/tmp/wordcount/out";
-//		String command = "hadoop jar GENE.jar "+mem.getRefname()+" "+mem.getInputpath()+" "+mem.getInputpath();
 		GetJobProcess.getjobprogcess(clientjobid, completion);
 		String displayMessage = "mapcompletion "+ completion.getMapcompletion() + " reducecompletion "+ completion.getReducecompletion();
 	    return Response.status(201).entity(completion).build();

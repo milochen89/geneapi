@@ -46,13 +46,8 @@ public class GetJobProcess {
    BufferedReader stderrReader = new BufferedReader(new InputStreamReader(stderr));
 
    PrintWriter out =new PrintWriter(sess.getStdin());
-   String command = "hadoop job -status "+jobid;
-
- // String command = "cd /home/chenhao/hadoop && ./bin/hadoop job -status "+jobid;
-//   out.println("cd /home/chenhao/hadoop && ./bin/hadoop jar hadoop-examples-1.1.2.jar wordcount hdfs://localhost:9000/tmp/wordcount/word.txt hdfs://localhost:9000/tmp/wordcount/out");
-   
+   String command = "hadoop job -status "+jobid;  
    out.println(command);
-
    out.close();
    sess.waitForCondition(ChannelCondition.CLOSED | ChannelCondition.EOF | ChannelCondition.EXIT_STATUS, 2000);
    
@@ -110,18 +105,6 @@ public class GetJobProcess {
     System.out.println(line);
     
    }
-   /*
-   System.out.println("Here is the output from stderr:");
-   while (true)
-   {
-    String line = stderrReader.readLine();
-    if (line == null || line.indexOf("Running job") != -1)
-     break;
-    System.out.println(line);
-    
-   }
-   */
-   /* Show exit status, if available (otherwise "null") */
    System.out.println("ExitCode: " + sess.getExitStatus());
    sess.close();/* Close this session */   
    conn.close();/* Close the connection */
