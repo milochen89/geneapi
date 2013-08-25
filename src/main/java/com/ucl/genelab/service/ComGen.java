@@ -18,13 +18,12 @@ import com.ucl.genelab.metadata.Bwaindex;
 import com.ucl.genelab.metadata.Completion;
 import com.ucl.genelab.metadata.Inputfilelist;
 import com.ucl.genelab.metadata.Outputfilelist;
-import com.ucl.genelab.resource.Conf;
 import com.ucl.genelab.resource.Init;
+import com.ucl.genelab.resource.ReadConfig;
 import com.ucl.genelab.ssh.GetJobId;
 import com.ucl.genelab.ssh.GetJobProcess;
 import com.ucl.genelab.ssh.SSHUtil;
 import com.ucl.genelab.ssh.SshConfiguration;
-import com.ucl.genelab.resource.Conf;
 import com.ucl.genelab.metadata.Referencelist;
 
 import org.apache.log4j.Logger;
@@ -32,7 +31,7 @@ import org.apache.log4j.Logger;
 @Path("/command")
 public class ComGen {
 	private static Logger logger = Logger.getLogger(ComGen.class);
-	private static SshConfiguration conf = new SshConfiguration( Conf.IP,Conf.USERNAME,Conf.PASSWORD,Conf.PORT);
+	private static SshConfiguration conf = new SshConfiguration( ReadConfig.IP,ReadConfig.USERNAME,ReadConfig.PASSWORD,ReadConfig.PORT);
 	public static ArrayList<String> reflist = new ArrayList();
 	public static ArrayList<String> inputlist = new ArrayList();
 	public static ArrayList<String> outputlist = new ArrayList();
@@ -120,7 +119,7 @@ public class ComGen {
 	public Response deleteall() {
 		try{
 		SSHUtil SshUitl = new SSHUtil(conf);
-		SshUitl.runCmd("hadoop jar /mapr/mapr-m3-student/myvolume/genelab/GENE.jar clean all", "UTF-8");
+		SshUitl.runCmd("hadoop jar "+ReadConfig.GENEJARPATH+" clean all", "UTF-8");
 		return Response.status(201).entity("1").build();
 		}catch (Exception ex){
 			return Response.status(403).entity("0").build();
@@ -133,7 +132,7 @@ public class ComGen {
 	public Response deletecache() {
 		try{
 		SSHUtil SshUitl = new SSHUtil(conf);
-		SshUitl.runCmd("hadoop jar /mapr/mapr-m3-student/myvolume/genelab/GENE.jar clean cache", "UTF-8");
+		SshUitl.runCmd("hadoop jar "+ReadConfig.GENEJARPATH+" clean cache", "UTF-8");
 		return Response.status(201).entity("1").build();
 		}catch (Exception ex){
 			return Response.status(403).entity("0").build();
@@ -146,7 +145,7 @@ public class ComGen {
 	public Response deletereference() {
 		try{
 		SSHUtil SshUitl = new SSHUtil(conf);
-		SshUitl.runCmd("hadoop jar /mapr/mapr-m3-student/myvolume/genelab/GENE.jar clean reference", "UTF-8");
+		SshUitl.runCmd("hadoop jar "+ReadConfig.GENEJARPATH+" clean reference", "UTF-8");
 		return Response.status(201).entity("1").build();
 		}catch (Exception ex){
 			return Response.status(403).entity("0").build();
@@ -159,7 +158,7 @@ public class ComGen {
 	public Response deletebwa() {
 		try{
 		SSHUtil SshUitl = new SSHUtil(conf);
-		SshUitl.runCmd("hadoop jar /mapr/mapr-m3-student/myvolume/genelab/GENE.jar clean bwa", "UTF-8");
+		SshUitl.runCmd("hadoop jar "+ReadConfig.GENEJARPATH+" clean bwa", "UTF-8");
 		return Response.status(201).entity("1").build();
 		}catch (Exception ex){
 			return Response.status(403).entity("0").build();

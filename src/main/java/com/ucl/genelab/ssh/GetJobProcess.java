@@ -12,19 +12,19 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import com.ucl.genelab.metadata.Completion;
-import com.ucl.genelab.resource.Conf;
+import com.ucl.genelab.resource.ReadConfig;
 public class GetJobProcess {
     public static void getjobprogcess (String jobid, Completion completion) {
     	
      try
   {
    /* Create a connection instance */
-   Connection conn = new Connection(Conf.IP);
+   Connection conn = new Connection(ReadConfig.IP);
    
    /* Now connect */
    conn.connect();
    /* Authenticate */
-   boolean isAuthenticated = conn.authenticateWithPassword(Conf.USERNAME,Conf.PASSWORD);
+   boolean isAuthenticated = conn.authenticateWithPassword(ReadConfig.USERNAME,ReadConfig.PASSWORD);
    if (isAuthenticated == false)
     throw new IOException("Authentication failed. Please check hostname, username and password.");
    /* Create a session */

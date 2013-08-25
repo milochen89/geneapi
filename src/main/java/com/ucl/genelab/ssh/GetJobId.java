@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import com.ucl.genelab.metadata.Bwamem;
-import com.ucl.genelab.resource.Conf;
+import com.ucl.genelab.resource.ReadConfig;
 public class GetJobId {
     public static String getjobid (Bwamem mem) {
     	
@@ -20,12 +20,12 @@ public class GetJobId {
      try
   {
    /* Create a connection instance */
-   Connection conn = new Connection(Conf.IP);
+   Connection conn = new Connection(ReadConfig.IP);
    
    /* Now connect */
    conn.connect();
    /* Authenticate */
-   boolean isAuthenticated = conn.authenticateWithPassword(Conf.USERNAME,Conf.PASSWORD);
+   boolean isAuthenticated = conn.authenticateWithPassword(ReadConfig.USERNAME,ReadConfig.PASSWORD);
    if (isAuthenticated == false)
     throw new IOException("Authentication failed. Please check hostname, username and password.");
    /* Create a session */
@@ -48,9 +48,9 @@ public class GetJobId {
 
    PrintWriter out =new PrintWriter(sess.getStdin());
    String filename = mem.getRefname()+"_"+mem.getInputpath()+"_"+mem.getAlgorithm();
-   String command = "cd /mapr/mapr-m3-student/myvolume/genelab/output/ && rm -r "+filename;
+   String command = "cd "+ReadConfig.outputfilecommand+" && rm -r "+filename;
   //out.println("cd /home/chenhao/hadoop && ./bin/hadoop jar hadoop-examples-1.1.2.jar wordcount hdfs://localhost:9000/tmp/wordcount/word.txt hdfs://localhost:9000/tmp/wordcount/out");
-   String command2 = "hadoop jar /mapr/mapr-m3-student/myvolume/genelab/GENE.jar "+mem.getAlgorithm()+" "+mem.getRefname()+" "+mem.getInputpath();
+   String command2 = "hadoop jar "+ReadConfig.GENEJARPATH+" "+mem.getAlgorithm()+" "+mem.getRefname()+" "+mem.getInputpath();
    out.println(command);
    out.println(command2);
 

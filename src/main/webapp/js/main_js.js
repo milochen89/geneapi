@@ -187,12 +187,15 @@ $(document).ready(function(){
 						$(".cleanup").on("click",function(){
 							
 							var text = $(this).text();
+							$("#cleaning").fadeIn("fast")
+							
 							if(text == "Clean All"){
 								$.ajax({
 									url :"rest/command/deleteall",
 									
 									success :function(data) {
-										alert ("Deletion completed");
+										$("#cleaning").fadeOut("fast");
+										$("#cleandone").fadeIn("fast");
 									},
 									error :function(msg) {
 										alert("error");
@@ -206,7 +209,8 @@ $(document).ready(function(){
 									url :"rest/command/deletereference",
 									
 									success :function(data) {
-										alert ("Deletion completed");
+										$("#cleaning").fadeOut("fast");
+										$("#cleandone").fadeIn("fast");
 									},
 									error :function(msg) {
 										alert("error");
@@ -220,7 +224,8 @@ $(document).ready(function(){
 									url :"rest/command/deletebwa",
 									
 									success :function(data) {
-										alert ("Deletion completed");
+										$("#cleaning").fadeOut("fast");
+										$("#cleandone").fadeIn("fast");
 									},
 									error :function(msg) {
 										alert("error");
@@ -234,7 +239,8 @@ $(document).ready(function(){
 									url :"rest/command/deletecache",
 									
 									success :function(data) {
-										alert ("Deletion completed");
+										$("#cleaning").fadeOut("fast");
+										$("#cleandone").fadeIn("fast");
 									},
 									error :function(msg) {
 										alert("error");

@@ -190,3 +190,13 @@ border-bottom-left-radius: 5px;
 	width:600px;
 	margin:0 auto;
 }
+
+#cleaning{
+	display:none;
+	text-align:center;
+}
+
+#cleandone{
+	display:none;
+	text-align:center;
+}

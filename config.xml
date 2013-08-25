@@ -1,0 +1,10 @@
+<web-config>
+<CLUSTERIP>128.16.8.148</CLUSTERIP>
+<CLUSTERPORT>22</CLUSTERPORT>
+<USERNAME>kpaligia</USERNAME>
+<PASSWORD>dEE87DDn</PASSWORD>
+<REFERENCEFILEPATH>/mapr/mapr-m3-student/myvolume/genelab/reference/</REFERENCEFILEPATH>
+<INPUTFILEPATH>/mapr/mapr-m3-student/myvolume/genelab/input/</INPUTFILEPATH>
+<OUTPUTFILEPATH>/mapr/mapr-m3-student/myvolume/genelab/output/</OUTPUTFILEPATH>
+<GENEJARPATH>/mapr/mapr-m3-student/myvolume/genelab/GENE.jar</GENEJARPATH>
+</web-config>

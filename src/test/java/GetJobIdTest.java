@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import com.google.gson.Gson;
 import com.ucl.genelab.metadata.Bwamem;
-import com.ucl.genelab.resource.Conf;
+import com.ucl.genelab.resource.ReadConfig;
 import com.ucl.genelab.ssh.GetJobId;
 
 
@@ -17,10 +17,10 @@ public class GetJobIdTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		Conf.setIP("127.0.0.1");
-		Conf.setPORT(22);
-		Conf.setUSERNAME("chenhao");
-		Conf.setPASSWORD("246135");
+		ReadConfig.setIP("127.0.0.1");
+		ReadConfig.setPORT(22);
+		ReadConfig.setUSERNAME("chenhao");
+		ReadConfig.setPASSWORD("246135");
 	}
 	
 

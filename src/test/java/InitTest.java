@@ -11,18 +11,18 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.ucl.genelab.resource.Conf;
 import com.ucl.genelab.resource.Init;
+import com.ucl.genelab.resource.ReadConfig;
 import com.ucl.genelab.ssh.SshConfiguration;
 
 public class InitTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Conf.setIP("127.0.0.1");
-		Conf.setPORT(22);
-		Conf.setUSERNAME("chenhao");
-		Conf.setPASSWORD("246135");
+		ReadConfig.setIP("127.0.0.1");
+		ReadConfig.setPORT(22);
+		ReadConfig.setUSERNAME("chenhao");
+		ReadConfig.setPASSWORD("246135");
 	}
 	
 	@BeforeClass
@@ -35,7 +35,7 @@ public class InitTest {
 
 	@Test
 	public void test() throws Exception {
-		SshConfiguration conf = new SshConfiguration( Conf.IP,Conf.USERNAME,Conf.PASSWORD,Conf.PORT);
+		SshConfiguration conf = new SshConfiguration( ReadConfig.IP,ReadConfig.USERNAME,ReadConfig.PASSWORD,ReadConfig.PORT);
 		Init init = new Init(conf);
 		ArrayList<String> actuallist = new ArrayList();
 		actuallist.add("GENE");
