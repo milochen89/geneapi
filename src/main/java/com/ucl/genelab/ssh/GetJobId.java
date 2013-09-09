@@ -16,6 +16,8 @@ import com.ucl.genelab.resource.ReadConfig;
 public class GetJobId {
     public static String getjobid (Bwamem mem) {
     	
+    	
+    int getjobrunning = 0;	
     String jobid = "";
      try
   {
@@ -62,7 +64,12 @@ public class GetJobId {
    while (true)
    {
     String line = stdoutReader.readLine();
-    if (line == null || line.indexOf("Running job") != -1)
+    if (line == null || line.indexOf("Running job") != -1 && getjobrunning == 0)
+    {
+    	getjobrunning++;
+    	continue;
+    }
+    if (line == null || line.indexOf("Running job") != -1 && getjobrunning == 1)
     {
      jobid = line.substring(line.indexOf("Running job")+13,line.indexOf("Running job")+34);
      System.out.println(jobid);
